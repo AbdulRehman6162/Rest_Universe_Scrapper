@@ -1,7 +1,7 @@
 # Restaurant Universe Collector
 
 Google Maps collection for the Islamabad–Rawalpindi restaurant intelligence project.
-The existing Colab notebook has been hardened to **V2.3.2**; its filename is retained so existing links continue to work.
+The existing Colab notebook has been hardened to **V2.3.3**; its filename is retained so existing links continue to work.
 
 [Open notebook in Google Colab](https://colab.research.google.com/github/AbdulRehman6162/Rest_Universe_Scrapper/blob/master/Profiling_GoogleSheets_Drive_V2_3_1_Fixed.ipynb)
 
@@ -67,3 +67,31 @@ Before a full run, perform the limited Colab smoke test against a copy of the ma
 ## Separate future work
 
 The attached project context positions this collector as **Layer 1: restaurant identity**. Google Places API adoption remains an explicit product/cost decision. Menu source discovery, channel-specific prices, append-only price observations, canonical item matching, competitor sets, benchmark baskets, and the owner portal belong to separate pipelines. They are not implemented by this correction.
+
+
+## V2.3.3: zero search results troubleshooting
+
+A run showing four `0 URLs` scrolls is not evidence that an area has no restaurants.
+The previous collector swallowed navigation/selector failures and returned an empty list.
+This update:
+
+- Builds the [documented Maps search URL](https://developers.google.com/maps/documentation/urls/get-started#search) with `api=1` and an encoded query; no Places API key is needed.
+- Waits up to 45 seconds for listing evidence, handles consent in frames, and retries an unrecognized/loading page once.
+- Supports relative place links, CID/query Place ID links, structured place-ID controls, non-div result feeds, and direct single-place redirects.
+- Distinguishes explicit no-results from consent, HTTP/network errors, blocked sessions, JavaScript-required pages, and unrecognized layouts. A blocked session stops rather than being bypassed or retried repeatedly.
+- Displays a failure screenshot and saves a JSON report plus HTML under `OUTPUT_DIR/search_debug`. The report includes the final URL, title, HTTP status, rendered text excerpt, counts, and recent failed-request/JavaScript events.
+- Logs query-level failures and stops collection. The writer refuses to sync after a failed collection, and old in-memory result lists are cleared. Successful earlier records remain in the checkpoint.
+- Explains empty refresh input separately. The user's saved run contained `Existing Master rows: 0`; confirm the selected spreadsheet if existing restaurants were expected. An empty master does not stop SEARCH.
+- Installs Chromium and its system dependencies with the current Python interpreter, and fails immediately if browser setup fails. `openpyxl` from the user's installation cell is retained.
+
+Restart the Colab session after opening the updated notebook and run cells in order.
+Keep the default small limits for the first rerun. If discovery still fails, share the
+screenshot displayed in Colab or the corresponding `search_debug/*.json` report. That
+is required to identify what Google actually returned in that session; changing selectors
+alone cannot establish the cause of the original logs.
+
+47 offline regression tests cover the original data-quality behavior plus search readiness,
+redirects, URL variants, failures, checkpoint behavior, diagnostics, and the writer guard.
+They use mocked page APIs. Live Maps/Colab behavior remains unverified: Chromium could not
+be downloaded in the development environment, and that environment is not the user's
+Colab session. The prior outputs were cleared rather than presented as new test results.
