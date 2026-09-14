@@ -1,0 +1,7 @@
+playwright>=1.48,<2
+pandas>=2.2,<3
+gspread>=6.1,<7
+google-auth>=2.35,<3
+google-auth-oauthlib>=1.2,<2
+python-dotenv>=1.0,<2
+filelock>=3.16,<4

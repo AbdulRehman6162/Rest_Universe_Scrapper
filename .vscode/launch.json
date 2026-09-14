@@ -1,0 +1,23 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Restaurant collector: preview (VS Code/Cursor)",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/local_runner.py",
+      "python": "${workspaceFolder}/.venv/Scripts/python.exe",
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "args": [
+        "--mode",
+        "search",
+        "--max-queries",
+        "1",
+        "--max-results",
+        "5"
+      ],
+      "justMyCode": true
+    }
+  ]
+}
