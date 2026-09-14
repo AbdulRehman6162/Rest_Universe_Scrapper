@@ -1,3 +1,17 @@
 __pycache__/
 *.py[cod]
 .ipynb_checkpoints/
+
+.venv/
+.env
+.env.*
+!.env.example
+secrets/
+output/
+credentials.json
+service_account.json
+authorized_user.json
+client_secret*.json
+*.log
+.vs/
+*.pyproj.user

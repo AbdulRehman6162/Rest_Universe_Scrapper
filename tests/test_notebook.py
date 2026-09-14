@@ -11,7 +11,7 @@ import types
 import unittest
 from datetime import datetime, timedelta, timezone
 from unittest.mock import AsyncMock
-from urllib.parse import quote, unquote, urlparse, parse_qsl, urlencode, urlunparse
+from urllib.parse import quote, unquote, urlparse, parse_qsl, urlencode, urlunparse, urljoin
 
 import pandas as pd
 
@@ -26,7 +26,7 @@ def load_functions():
         if cell['cell_type'] != 'code' or index == 2:
             continue
         tree = ast.parse(''.join(cell['source']))
-        keep = [node for node in tree.body if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)) or
+        keep = [node for node in tree.body if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef, ast.ClassDef)) or
                 (isinstance(node, ast.Assign) and any(isinstance(t, ast.Name) and t.id in constants for t in node.targets))]
         exec(compile(ast.Module(body=keep, type_ignores=[]), str(NOTEBOOK), 'exec'), env)
     return env

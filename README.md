@@ -1,7 +1,11 @@
+# Run locally in Visual Studio (Windows)
+
+See [LOCAL_SETUP.md](LOCAL_SETUP.md) for installation, Visual Studio Python support, Google authentication and PowerShell run commands. `local_runner.py` opens visible Chromium, previews locally, and syncs to Sheets with `--write`. Cursor/VS Code are also supported. The included notebook has the V2.3.3 search diagnostics from PR #3.
+
 # Restaurant Universe Collector
 
 Google Maps collection for the Islamabad–Rawalpindi restaurant intelligence project.
-The existing Colab notebook has been hardened to **V2.3.2**; its filename is retained so existing links continue to work.
+The existing Colab notebook has been hardened to **V2.3.3**; its filename is retained so existing links continue to work.
 
 [Open notebook in Google Colab](https://colab.research.google.com/github/AbdulRehman6162/Rest_Universe_Scrapper/blob/master/Profiling_GoogleSheets_Drive_V2_3_1_Fixed.ipynb)
 
